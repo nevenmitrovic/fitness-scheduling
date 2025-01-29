@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Lista treninga</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list inset>
+    <ion-card class="ion-padding">
+      <ion-card-header>
+        <ion-card-title>Ponedeljak</ion-card-title>
+        <ion-card-subtitle>09:00</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>Preostala mesta za ovaj termin: <span>2/8</span></p>
+      </ion-card-content>
+
+      <ion-button>Prijavi se na trening</ion-button>
+    </ion-card>
+  </ion-list>
+
+  <ion-footer [translucent]="true">
+    <ion-toolbar>
+      <ion-button expand="block" fill="outline">
+        Edit
+        <ion-icon slot="end" name="create"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
