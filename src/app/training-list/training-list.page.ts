@@ -3,6 +3,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TrainingEventsRepositoryService } from '../training-events-repository/training-events-repository.service';
 
 import { TrainingEvent } from '../api/models/trainingEvent';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-training-list',
@@ -17,6 +18,7 @@ export class TrainingList {
   private readonly trainingEventsRepository = inject(
     TrainingEventsRepositoryService
   );
+  private readonly router = inject(Router);
 
   async ngOnInit(): Promise<void> {
     this.trainingEvents =
@@ -34,5 +36,9 @@ export class TrainingList {
     } finally {
       this.loaded = true;
     }
+  }
+
+  goToDetails(id: string): void {
+    this.router.navigate(['training-details', id]);
   }
 }

@@ -10,6 +10,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'training-details/:id',
+    loadChildren: () =>
+      import('./training-details/training-details.module').then(
+        (m) => m.TrainingDetailsPageModule
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'training-list',
     pathMatch: 'full',
@@ -18,6 +25,10 @@ const routes: Routes = [
     path: '',
     redirectTo: 'training-list',
     pathMatch: 'full',
+  },
+  {
+    path: 'training-details',
+    loadChildren: () => import('./training-details/training-details.module').then( m => m.TrainingDetailsPageModule)
   },
 ];
 
