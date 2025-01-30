@@ -5,27 +5,51 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list inset>
-    <ion-card class="ion-padding">
-      <ion-card-header>
-        <ion-card-title>Ponedeljak</ion-card-title>
-        <ion-card-subtitle>09:00</ion-card-subtitle>
-      </ion-card-header>
+  <ng-container *ngIf="loaded; else loading">
+    <ng-container *ngIf="trainingEvents.length > 0" ; else noTrainingEvents>
+      <ion-list inset>
+        <ion-card *ngFor="let training of trainingEvents" class="ion-padding">
+          <ion-card-header>
+            <ion-card-title>
+              {{ training.date | date:'dd.MM.YYYY.' }}
+            </ion-card-title>
+            <ion-card-subtitle>
+              {{ training.date | date:'HH:mm' }}
+            </ion-card-subtitle>
+          </ion-card-header>
 
-      <ion-card-content>
-        <p>Preostala mesta za ovaj termin: <span>2/8</span></p>
-      </ion-card-content>
+          <ion-card-content>
+            <p>
+              Preostala mesta za ovaj termin:
+              <span>{{ training.slots.length }}/8</span>
+            </p>
+          </ion-card-content>
 
-      <ion-button>Prijavi se na trening</ion-button>
-    </ion-card>
-  </ion-list>
+          <ion-button>Prijavi se na trening</ion-button>
+        </ion-card>
+      </ion-list>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #noTrainingEvents>
+    <p>Trenutno nema dostupnih treninga.</p>
+  </ng-template>
+
+  <ng-template #loading>
+    <div class="spinner-container">
+      <ion-spinner name="crescent" color="primary"></ion-spinner>
+    </div>
+  </ng-template>
 </ion-content>
 
 <ion-footer [translucent]="true">
   <ion-toolbar>
-    <ion-button expand="block" fill="outline">
+    <ion-button fill="outline" slot="start">
       Kreiraj novi trening
       <ion-icon slot="end" name="create"></ion-icon>
+    </ion-button>
+    <ion-button color="primary" slot="end" (click)="refreshTrainingEvents()">
+      Osvezi treninge
     </ion-button>
   </ion-toolbar>
 </ion-footer>
