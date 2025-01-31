@@ -1,0 +1,54 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { LoadingController } from '@ionic/angular';
+
+@Component({
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
+  styleUrls: ['./sign-up.component.scss'],
+  standalone: false,
+})
+export class SignUpComponent implements OnInit {
+  error = '';
+  signUpForm!: FormGroup;
+
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly loadingController = inject(LoadingController);
+
+  constructor() {
+    this.signUpForm = this.formBuilder.group({
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      fullName: ['', [Validators.required, Validators.minLength(3)]],
+      dateOfBirth: ['', [Validators.required]],
+      phone: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            /^(\+3816|06)(([0-6]|[8-9])\d{6,7}|(77|78)\d{5,6})$/
+          ),
+        ],
+      ],
+    });
+    this.signUpForm.valueChanges.subscribe(() => {
+      this.error = '';
+    });
+  }
+
+  ngOnInit() {}
+
+  async signUp() {
+    if (this.signUpForm.invalid) {
+      console.log(this.signUpForm)
+      return;
+    }
+
+    const loading = await this.loadingController.create({
+      message: 'Signing up...',
+    });
+    await loading.present();
+    await loading.dismiss();
+    console.log(this.signUpForm.value);
+  }
+}

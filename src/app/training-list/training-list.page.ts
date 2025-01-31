@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ModalController, IonRouterOutlet } from '@ionic/angular';
 
@@ -18,14 +19,17 @@ import { TrainingCardModalComponent } from '../training-card-modal/training-card
 export class TrainingList {
   trainingEvents: TrainingEvent[] = [];
   loaded = false;
+  user$ = false;
 
   private readonly trainingEventsRepository = inject(
     TrainingEventsRepositoryService
   );
   private readonly modalController = inject(ModalController);
   private readonly routerOutlet = inject(IonRouterOutlet);
+  private readonly router = inject(Router);
 
   async ngOnInit(): Promise<void> {
+    if (!this.user$) this.router.navigate(['/account']);
     this.trainingEvents =
       await this.trainingEventsRepository.getTrainingEventsFromStorage();
     this.loaded = true;

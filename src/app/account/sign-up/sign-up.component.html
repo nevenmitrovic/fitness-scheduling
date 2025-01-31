@@ -1,0 +1,90 @@
+<ion-content>
+  <form (ngSubmit)="signUp()" [formGroup]="signUpForm">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          type="text"
+          formControlName="fullName"
+          label="Ime i prezime"
+          labelPlacement="stacked"
+        />
+      </ion-item>
+      <ion-text
+        class="validation-errors"
+        *ngIf="
+          signUpForm.get('fullName')?.invalid &&
+          (signUpForm.get('fullName')?.dirty ||
+            signUpForm.get('fullName')?.touched)
+        "
+      >
+        ime i prezime su obavezni
+      </ion-text>
+      <ion-item>
+        <ion-input
+          type="text"
+          formControlName="phone"
+          labelPlacement="stacked"
+          label="Mobilni telefon"
+        />
+      </ion-item>
+      <ion-text
+        class="validation-errors"
+        *ngIf="
+          signUpForm.get('phone')?.invalid &&
+          (signUpForm.get('phone')?.dirty || signUpForm.get('phone')?.touched)
+        "
+      >
+        mobilni telefon nije validan
+      </ion-text>
+      <ion-item>
+        <ion-input
+          type="password"
+          formControlName="password"
+          labelPlacement="stacked"
+          label="Lozinka"
+        >
+          <ion-input-password-toggle slot="end" />
+        </ion-input>
+      </ion-item>
+      <ion-text
+        class="validation-errors"
+        *ngIf="
+          signUpForm.get('password')?.invalid &&
+          (signUpForm.get('password')?.dirty ||
+            signUpForm.get('password')?.touched)
+        "
+      >
+        lozinka mora imati najmanje 6 karaktera
+      </ion-text>
+      <ion-item>
+        <ion-label position="stacked">Datum rodjenja</ion-label>
+        <ion-item class="ion-justify-content-center ion-no-border round">
+          <ion-datetime
+            formControlName="dateOfBirth"
+            locale="sr-RS"
+            presentation="date"
+            min="1950-01-01T00:00:00"
+            max="2012-01-01T00:00:00"
+          />
+        </ion-item>
+      </ion-item>
+      <ion-text
+        class="validation-errors"
+        *ngIf="
+          signUpForm.get('dateOfBirth')?.invalid &&
+          (signUpForm.get('dateOfBirth')?.dirty ||
+            signUpForm.get('dateOfBirth')?.touched)
+        "
+      >
+        datum rodjenja je obavezan
+      </ion-text>
+    </ion-list>
+    <ion-button
+      expand="full"
+      type="submit"
+      class="px-15"
+    >
+      Registruj se
+    </ion-button>
+  </form>
+</ion-content>
