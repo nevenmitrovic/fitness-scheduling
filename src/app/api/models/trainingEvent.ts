@@ -1,5 +1,7 @@
+import { IUser } from './user';
+
 export interface TrainingEvent {
   id: string;
   date: string;
-  slots: string[];
+  exercisers: IUser[];
 }

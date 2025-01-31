@@ -2,105 +2,73 @@ const data = [
   {
     id: '550e8400-e29b-41d4-a716-446655440000',
     date: '2025-01-29T13:05:30.123Z',
-    slots: [
-      '8ad0ff4b-9615-4129-9894-c30dd0af1840',
-      '452b49ba-ca37-4681-8edf-df7a4258d9b4',
+    exercisers: [
+      {
+        id: '8ad0ff4b-9615-4129-9894-c30dd0af1840',
+        fullName: 'Milan Pavlović',
+        dateOfBirth: '15.10.1996.',
+        phone: '0612393788',
+      },
+      {
+        id: '452b49ba-ca37-4681-8edf-df7a4258d9b4',
+        fullName: 'Vladimir Kovačević',
+        dateOfBirth: '11.05.1970.',
+        phone: '0658281508',
+      },
     ],
   },
   {
     id: 'a153c1dc-9329-4a65-99bb-63724659b88e',
     date: '2025-01-29T17:07:00.864115Z',
-    slots: [
-      '51c26117-610d-4201-a84f-8417c17c6b70',
-      '6bc82e4e-b8ef-47f3-b28e-17f10d32e22e',
-      'c84bc402-ceb3-4d72-9b1a-9a949e1e6b06',
-      '30129569-baef-4ba3-bd76-67a72e7d8cab',
-      'c6ef0ba5-06a9-4930-9b74-4764cfc7eec9',
+    exercisers: [
+      {
+        id: '51c26117-610d-4201-a84f-8417c17c6b70',
+        fullName: 'Milan Pavlović',
+        dateOfBirth: '25.12.2002.',
+        phone: '0654504046',
+      },
+      {
+        id: '6bc82e4e-b8ef-47f3-b28e-17f10d32e22e',
+        fullName: 'Milica Simić',
+        dateOfBirth: '16.04.2004.',
+        phone: '0657932092',
+      },
+      {
+        id: 'c84bc402-ceb3-4d72-9b1a-9a949e1e6b06',
+        fullName: 'Dragana Nikolić',
+        dateOfBirth: '15.08.1987.',
+        phone: '0652172137',
+      },
+      {
+        id: '30129569-baef-4ba3-bd76-67a72e7d8cab',
+        fullName: 'Vladimir Kovačević',
+        dateOfBirth: '25.06.1984.',
+        phone: '0644154405',
+      },
+      {
+        id: 'c6ef0ba5-06a9-4930-9b74-4764cfc7eec9',
+        fullName: 'Jelena Stanković',
+        dateOfBirth: '24.03.1993.',
+        phone: '0630124002',
+      },
     ],
   },
   {
     id: '6e925e94-85f3-434e-84aa-872d5f2d107d',
     date: '2025-01-30T17:07:00.864319Z',
-    slots: [
-      'ef08ae0a-62f7-4059-9775-430feb6dc0fb',
-      '3d1f3d0c-928d-4772-af62-26780f4eddbb',
-    ],
-  },
-  {
-    id: 'b27e7c61-7bfe-477c-a6a2-a85753ad610c',
-    date: '2025-01-31T17:07:00.864511Z',
-    slots: [
-      'b068e57a-14ff-4f18-8800-9ff021223883',
-      '3f18d7ef-4e6c-4ea1-802b-03626eec6ab7',
-      '468d0487-f77b-41fe-b3b9-65b7753c7d6c',
-      '0c87c8f7-b12e-4f85-b2b3-2bd3c153f67d',
-      '8e9bfc0d-6fe4-42bf-9386-8b33a2a30bc0',
-      'e8400b4c-a675-490e-8134-8b69661554db',
-      '52cc71a7-ddf7-46b8-9255-f3158a20f4b0',
-    ],
-  },
-  {
-    id: 'd80ce862-ea94-4462-a1df-9d7d35775849',
-    date: '2025-02-01T17:07:00.864760Z',
-    slots: [
-      '5d52639c-aeda-4c10-a9eb-ad9ad38460d1',
-      '04673f5b-6149-4755-ae5c-3ecad4ea26e9',
-      '097b1030-1898-475a-8e2b-122e2e26228c',
-    ],
-  },
-  {
-    id: '2c682e92-1770-4b9d-81c5-a22833e9743d',
-    date: '2025-02-03T17:07:00.864998Z',
-    slots: [
-      '5eeb963d-6c39-40b2-ab31-0e2d0863883c',
-      '5d347ce2-28dc-4af3-9430-d084d1ab8a17',
-      '7aa4b034-4c66-4ee8-825d-09b227f9ca06',
-      '5184408d-bf8c-44a8-88cf-916fdc94b691',
-      '43a3e4af-a2d8-4693-897d-7b0c6155c8cd',
-      '9fbb74b2-bd8d-4dfc-a3c8-f1b08f844d04',
-      '71ca5494-2390-48c1-9fe5-55d3b1ea4744',
-      '497231bc-2b0d-4a67-96cc-6f4d67185108',
-    ],
-  },
-  {
-    id: '17c9eebe-c3f5-467f-b4c7-91e9bc4bdadf',
-    date: '2025-02-05T17:07:00.865513Z',
-    slots: [
-      '53248df9-9913-4298-acb2-57651c1dfe02',
-      '563d06df-6e22-4635-9bb9-71daa38dd677',
-      'd4248473-c76b-43c2-9c40-cf21ae85b2fe',
-      '75a5e1ae-0be0-4e1f-a5ab-1cc9034cb833',
-      '72f99922-ecc1-4978-9345-b016a1dfcc95',
-    ],
-  },
-  {
-    id: '8bb9e6dd-63c0-4137-89d1-69ec31402d9a',
-    date: '2025-02-06T17:07:00.865570Z',
-    slots: [
-      'cf71d726-2b3e-45bf-b22e-6fa4a27eb792',
-      'a8d327af-d770-4974-879e-a5c5fa9a3d4e',
-      'abd1b869-6256-47f0-811b-607c6479cdbe',
-      '48a5e9b8-a203-42b9-a923-b039af3f0736',
-      'e483b637-053d-48fa-94fb-e0cc5fd3107b',
-    ],
-  },
-  {
-    id: '3fc2903c-94c1-48b6-8c84-37e3830549fb',
-    date: '2025-02-07T17:07:00.865633Z',
-    slots: [
-      'd45f78b1-c028-407a-aad2-585edc1eb5cb',
-      '22cc4f80-f3ff-4855-9bcc-96a1dde7b9cc',
-      'ecafd364-848f-4cef-994d-8009dc3f0108',
-      'a33eb8f1-ef90-43c2-b9c2-ab429053a66e',
-      '870be78a-133c-4704-9a84-627dc24ee0ab',
-    ],
-  },
-  {
-    id: 'fbbfd3d2-6f41-46f1-ae0d-01a8e5a79c90',
-    date: '2025-02-08T17:07:00.865701Z',
-    slots: [
-      '19665d70-d1c2-4710-b62b-566441212bb4',
-      '8e32112c-ace8-4dbb-9d1b-af5fa295ae52',
+    exercisers: [
+      {
+        id: 'ef08ae0a-62f7-4059-9775-430feb6dc0fb',
+        fullName: 'Aleksandar Đorđević',
+        dateOfBirth: '09.08.2005.',
+        phone: '0681968608',
+      },
+      {
+        id: '3d1f3d0c-928d-4772-af62-26780f4eddbb',
+        fullName: 'Nikola Jovanović',
+        dateOfBirth: '18.01.1983.',
+        phone: '0656083965',
+      },
     ],
   },
 ];

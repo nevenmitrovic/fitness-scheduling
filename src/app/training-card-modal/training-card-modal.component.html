@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Vezbaci za ovaj trening</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Zatvori</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ng-container *ngIf="exercisers.length > 0; else noExercisers">
+    <ion-list>
+      <ion-item *ngFor="let exerciser of exercisers">
+        <ion-avatar slot="start">
+          <ion-img src="assets/icon/favicon.png"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ exerciser.fullName }}</h2>
+        </ion-label>
+        <ion-button>Izbrisi</ion-button>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <ng-template #noExercisers>
+    <p>Trenutno nema prijavljenih vezbaca</p>
+  </ng-template>
+</ion-content>

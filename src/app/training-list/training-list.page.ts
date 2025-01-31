@@ -1,9 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 
+import { ModalController, IonRouterOutlet } from '@ionic/angular';
+
 import { TrainingEventsRepositoryService } from '../training-events-repository/training-events-repository.service';
 
 import { TrainingEvent } from '../api/models/trainingEvent';
-import { Router } from '@angular/router';
+import { IUser } from '../api/models/user';
+
+import { TrainingCardModalComponent } from '../training-card-modal/training-card-modal.component';
 
 @Component({
   selector: 'app-training-list',
@@ -18,7 +22,8 @@ export class TrainingList {
   private readonly trainingEventsRepository = inject(
     TrainingEventsRepositoryService
   );
-  private readonly router = inject(Router);
+  private readonly modalController = inject(ModalController);
+  private readonly routerOutlet = inject(IonRouterOutlet);
 
   async ngOnInit(): Promise<void> {
     this.trainingEvents =
@@ -36,5 +41,17 @@ export class TrainingList {
     } finally {
       this.loaded = true;
     }
+  }
+
+  async openTrainingCardModal(exercisers: IUser[]): Promise<void> {
+    const modal = await this.modalController.create({
+      component: TrainingCardModalComponent,
+      presentingElement: this.routerOutlet.nativeEl,
+      componentProps: {
+        exercisers,
+      },
+    });
+    await modal.present();
+    await modal.onDidDismiss();
   }
 }

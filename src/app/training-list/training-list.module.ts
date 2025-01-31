@@ -6,9 +6,10 @@ import { IonicModule } from '@ionic/angular';
 import { TrainingList } from './training-list.page';
 
 import { TrainingListRoutingModule } from './training-list-routing.module';
+import { TrainingCardModalComponent } from '../training-card-modal/training-card-modal.component';
 
 @NgModule({
   imports: [CommonModule, IonicModule, TrainingListRoutingModule],
-  declarations: [TrainingList],
+  declarations: [TrainingList, TrainingCardModalComponent],
 })
 export class TrainingListModule {}
