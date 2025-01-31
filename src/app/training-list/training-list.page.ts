@@ -37,8 +37,4 @@ export class TrainingList {
       this.loaded = true;
     }
   }
-
-  goToDetails(id: string): void {
-    this.router.navigate(['training-details', id]);
-  }
 }

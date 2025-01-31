@@ -8,11 +8,7 @@
   <ng-container *ngIf="loaded; else loading">
     <ng-container *ngIf="trainingEvents.length > 0" ; else noTrainingEvents>
       <ion-list inset>
-        <ion-card
-          *ngFor="let training of trainingEvents"
-          class="ion-padding"
-          (click)="goToDetails(training.id)"
-        >
+        <ion-card *ngFor="let training of trainingEvents" class="ion-padding">
           <ion-card-header>
             <ion-card-title>
               {{ training.date | date:'dd.MM.YYYY.' }}
