@@ -45,7 +45,7 @@ export class SignUpComponent implements OnInit {
     this.router.navigate(['/account/sign-in']);
   }
 
-  async signUp() {
+  async signUp(): Promise<void> {
     if (this.signUpForm.invalid) {
       return;
     }
@@ -56,17 +56,20 @@ export class SignUpComponent implements OnInit {
     await loading.present();
     try {
       const res = await this.userService.signUp(this.signUpForm.value);
-      console.log(res);
-      this.router.navigate(['/account/sign-in']);
+      if (res.error) {
+        throw res.error;
+      }
+      await this.router.navigate(['/']);
     } catch (e) {
       console.error(e);
       const alert = await this.alertController.create({
         header: 'Greška',
-        message: 'Neispravni podaci',
+        message: 'Neispravni podaci, pokusajte ponovo',
         buttons: ['OK'],
       });
       await alert.present();
     } finally {
+      this.signUpForm.reset();
       await loading.dismiss();
     }
   }

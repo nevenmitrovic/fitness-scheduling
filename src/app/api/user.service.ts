@@ -8,8 +8,6 @@ import {
 
 import { ISignUp } from './models/signUp';
 
-import { from, Observable } from 'rxjs';
-
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -22,21 +20,27 @@ export class UserService {
   );
 
   async signUp(data: ISignUp): Promise<AuthResponse> {
-    this.userProfile(data);
     try {
-      return await this.supabase.auth.signUp({
+      const res = await this.supabase.auth.signUp({
         email: data.email,
         password: data.password,
       });
+      if (!res.error) {
+        await this.userProfile(data, res.data.user?.id as string);
+      }
+      return res;
     } catch (e) {
       console.error(e);
       throw e;
     }
   }
 
-  private async userProfile(data: ISignUp): Promise<void> {
+  private async userProfile(data: ISignUp, id: string): Promise<void> {
     try {
-      await this.supabase.from('fitness-scheduling-users').insert({...data, role: 'user'});
+      const { password, ...restData } = data;
+      await this.supabase
+        .from('fitness-scheduling-users')
+        .insert({ ...restData, id, role: 'user' });
     } catch (e) {
       console.error(e);
       throw e;
