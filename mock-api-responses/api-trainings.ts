@@ -10,6 +10,7 @@ const data = [
         fullName: 'Milan Pavlović',
         dateOfBirth: '15.10.1996.',
         phone: '0612393788',
+        email: 'example@gmail.com',
         role: Role.admin,
       },
       {
@@ -17,6 +18,7 @@ const data = [
         fullName: 'Vladimir Kovačević',
         dateOfBirth: '11.05.1970.',
         phone: '0658281508',
+        email: 'example@gmail.com',
         role: Role.user,
       },
     ],
@@ -30,6 +32,7 @@ const data = [
         fullName: 'Milan Pavlović',
         dateOfBirth: '25.12.2002.',
         phone: '0654504046',
+        email: 'example@gmail.com',
         role: Role.user,
       },
       {
@@ -37,6 +40,7 @@ const data = [
         fullName: 'Milica Simić',
         dateOfBirth: '16.04.2004.',
         phone: '0657932092',
+        email: 'example@gmail.com',
         role: Role.user,
       },
       {
@@ -44,6 +48,7 @@ const data = [
         fullName: 'Dragana Nikolić',
         dateOfBirth: '15.08.1987.',
         phone: '0652172137',
+        email: 'example@gmail.com',
         role: Role.user,
       },
       {
@@ -51,6 +56,7 @@ const data = [
         fullName: 'Vladimir Kovačević',
         dateOfBirth: '25.06.1984.',
         phone: '0644154405',
+        email: 'example@gmail.com',
         role: Role.user,
       },
       {
@@ -58,6 +64,7 @@ const data = [
         fullName: 'Jelena Stanković',
         dateOfBirth: '24.03.1993.',
         phone: '0630124002',
+        email: 'example@gmail.com',
         role: Role.user,
       },
     ],
@@ -71,6 +78,7 @@ const data = [
         fullName: 'Aleksandar Đorđević',
         dateOfBirth: '09.08.2005.',
         phone: '0681968608',
+        email: 'example@gmail.com',
         role: Role.user,
       },
       {
@@ -78,6 +86,7 @@ const data = [
         fullName: 'Nikola Jovanović',
         dateOfBirth: '18.01.1983.',
         phone: '0656083965',
+        email: 'example@gmail.com',
         role: Role.user,
       },
     ],

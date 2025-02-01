@@ -21,6 +21,23 @@
       </ion-text>
       <ion-item>
         <ion-input
+          type="email"
+          formControlName="email"
+          label="Email adresa"
+          labelPlacement="stacked"
+        />
+      </ion-item>
+      <ion-text
+        class="validation-errors"
+        *ngIf="
+          signUpForm.get('email')?.invalid &&
+          (signUpForm.get('email')?.dirty || signUpForm.get('email')?.touched)
+        "
+      >
+        email adresa je obavezna
+      </ion-text>
+      <ion-item>
+        <ion-input
           type="text"
           formControlName="phone"
           labelPlacement="stacked"
@@ -88,7 +105,7 @@
       class="px-15"
       (click)="navigateToSignIn()"
     >
-      Registruj se
+      Uloguj se
     </ion-button>
   </form>
 </ion-content>

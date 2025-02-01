@@ -2,7 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
+
+import { UserService } from 'src/app/api/user.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,17 +13,19 @@ import { LoadingController } from '@ionic/angular';
   standalone: false,
 })
 export class SignUpComponent implements OnInit {
-  error = '';
   signUpForm!: FormGroup;
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly loadingController = inject(LoadingController);
   private readonly router = inject(Router);
+  private readonly alertController = inject(AlertController);
+  private readonly userService = inject(UserService);
 
   constructor() {
     this.signUpForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       fullName: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
       dateOfBirth: ['', [Validators.required]],
       phone: [
         '',
@@ -32,9 +36,6 @@ export class SignUpComponent implements OnInit {
           ),
         ],
       ],
-    });
-    this.signUpForm.valueChanges.subscribe(() => {
-      this.error = '';
     });
   }
 
@@ -53,6 +54,20 @@ export class SignUpComponent implements OnInit {
       message: 'Signing up...',
     });
     await loading.present();
-    await loading.dismiss();
+    try {
+      const res = await this.userService.signUp(this.signUpForm.value);
+      console.log(res);
+      this.router.navigate(['/account/sign-in']);
+    } catch (e) {
+      console.error(e);
+      const alert = await this.alertController.create({
+        header: 'Greška',
+        message: 'Neispravni podaci',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    } finally {
+      await loading.dismiss();
+    }
   }
 }

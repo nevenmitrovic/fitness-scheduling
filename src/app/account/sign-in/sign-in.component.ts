@@ -2,7 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
+
+import { UserService } from 'src/app/api/user.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -11,28 +13,18 @@ import { LoadingController } from '@ionic/angular';
   standalone: false,
 })
 export class SignInComponent implements OnInit {
-  error = '';
   signInForm!: FormGroup;
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly loadingController = inject(LoadingController);
   private readonly router = inject(Router);
+  private readonly userService = inject(UserService);
+  private readonly alertController = inject(AlertController);
 
   constructor() {
     this.signInForm = this.formBuilder.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
-      phone: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(
-            /^(\+3816|06)(([0-6]|[8-9])\d{6,7}|(77|78)\d{5,6})$/
-          ),
-        ],
-      ],
-    });
-    this.signInForm.valueChanges.subscribe(() => {
-      this.error = '';
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 
@@ -51,6 +43,16 @@ export class SignInComponent implements OnInit {
       message: 'Signing in...',
     });
     await loading.present();
-    await loading.dismiss();
+    try {
+    } catch (e) {
+      console.error(e);
+      this.alertController.create({
+        header: 'Greška',
+        message: 'Neispravni podaci',
+        buttons: ['OK'],
+      });
+    } finally {
+      await loading.dismiss();
+    }
   }
 }

@@ -3,20 +3,20 @@
     <ion-list>
       <ion-item>
         <ion-input
-          type="text"
-          formControlName="phone"
+          type="email"
+          formControlName="email"
           labelPlacement="stacked"
-          label="Mobilni telefon"
+          label="Email adresa"
         />
       </ion-item>
       <ion-text
         class="validation-errors"
         *ngIf="
-          signInForm.get('phone')?.invalid &&
-          (signInForm.get('phone')?.dirty || signInForm.get('phone')?.touched)
+          signInForm.get('email')?.invalid &&
+          (signInForm.get('email')?.dirty || signInForm.get('email')?.touched)
         "
       >
-        mobilni telefon nije validan
+        email adresa nije validna
       </ion-text>
       <ion-item>
         <ion-input
