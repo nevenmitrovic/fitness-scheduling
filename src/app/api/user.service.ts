@@ -26,7 +26,7 @@ export class UserService {
         password: data.password,
       });
       if (!res.error) {
-        await this.userProfile(data, res.data.user?.id as string);
+        await this.createProfile(data, res.data.user?.id as string);
       }
       return res;
     } catch (e) {
@@ -35,7 +35,7 @@ export class UserService {
     }
   }
 
-  private async userProfile(data: ISignUp, id: string): Promise<void> {
+  private async createProfile(data: ISignUp, id: string): Promise<void> {
     try {
       const { password, ...restData } = data;
       await this.supabase
