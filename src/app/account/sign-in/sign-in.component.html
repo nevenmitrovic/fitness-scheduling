@@ -1,3 +1,54 @@
-<p>
-  sign-in works!
-</p>
+<ion-content>
+  <form (ngSubmit)="signIn()" [formGroup]="signInForm">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          type="text"
+          formControlName="phone"
+          labelPlacement="stacked"
+          label="Mobilni telefon"
+        />
+      </ion-item>
+      <ion-text
+        class="validation-errors"
+        *ngIf="
+          signInForm.get('phone')?.invalid &&
+          (signInForm.get('phone')?.dirty || signInForm.get('phone')?.touched)
+        "
+      >
+        mobilni telefon nije validan
+      </ion-text>
+      <ion-item>
+        <ion-input
+          type="password"
+          formControlName="password"
+          labelPlacement="stacked"
+          label="Lozinka"
+        >
+          <ion-input-password-toggle slot="end" />
+        </ion-input>
+      </ion-item>
+      <ion-text
+        class="validation-errors"
+        *ngIf="
+          signInForm.get('password')?.invalid &&
+          (signInForm.get('password')?.dirty ||
+            signInForm.get('password')?.touched)
+        "
+      >
+        lozinka mora imati najmanje 6 karaktera
+      </ion-text>
+    </ion-list>
+    <ion-button expand="full" type="submit" class="px-15">
+      Uloguj se
+    </ion-button>
+    <ion-button
+      fill="clear"
+      expand="full"
+      class="px-15"
+      (click)="navigateToSignUp()"
+    >
+      Registruj se
+    </ion-button>
+  </form>
+</ion-content>

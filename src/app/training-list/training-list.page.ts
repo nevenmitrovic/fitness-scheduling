@@ -19,7 +19,7 @@ import { TrainingCardModalComponent } from '../training-card-modal/training-card
 export class TrainingList {
   trainingEvents: TrainingEvent[] = [];
   loaded = false;
-  user$ = false;
+  user$ = true;
 
   private readonly trainingEventsRepository = inject(
     TrainingEventsRepositoryService

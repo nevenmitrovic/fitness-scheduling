@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 import { LoadingController } from '@ionic/angular';
 
@@ -15,6 +16,7 @@ export class SignUpComponent implements OnInit {
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly loadingController = inject(LoadingController);
+  private readonly router = inject(Router);
 
   constructor() {
     this.signUpForm = this.formBuilder.group({
@@ -38,9 +40,12 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {}
 
+  navigateToSignIn() {
+    this.router.navigate(['/account/sign-in']);
+  }
+
   async signUp() {
     if (this.signUpForm.invalid) {
-      console.log(this.signUpForm)
       return;
     }
 
@@ -49,6 +54,5 @@ export class SignUpComponent implements OnInit {
     });
     await loading.present();
     await loading.dismiss();
-    console.log(this.signUpForm.value);
   }
 }

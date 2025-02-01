@@ -79,10 +79,14 @@
         datum rodjenja je obavezan
       </ion-text>
     </ion-list>
+    <ion-button expand="full" type="submit" class="px-15">
+      Registruj se
+    </ion-button>
     <ion-button
+      fill="clear"
       expand="full"
-      type="submit"
       class="px-15"
+      (click)="navigateToSignIn()"
     >
       Registruj se
     </ion-button>
