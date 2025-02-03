@@ -26,6 +26,11 @@ export class SignInComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
     });
+    this.userService.getCurrentUser().subscribe((u) => {
+      if (u) {
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   ngOnInit() {}

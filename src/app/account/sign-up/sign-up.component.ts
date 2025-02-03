@@ -37,6 +37,11 @@ export class SignUpComponent implements OnInit {
         ],
       ],
     });
+    this.userService.getCurrentUser().subscribe((u) => {
+      if (u) {
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   ngOnInit() {}
