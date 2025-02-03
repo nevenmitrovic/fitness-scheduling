@@ -19,7 +19,9 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UserService {
-  private currentUser!: BehaviorSubject<User | boolean>;
+  private currentUser: BehaviorSubject<User | boolean> = new BehaviorSubject<
+    User | boolean
+  >(false);
 
   private readonly supabase: SupabaseClient = createClient(
     environment.supabaseConfig.supabaseUrl,
@@ -31,7 +33,7 @@ export class UserService {
     this.supabase.auth.onAuthStateChange((event, sess) => {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         console.log('SET USER');
-        if (sess !== null) this.currentUser.next(sess.user);
+        this.currentUser.next(sess?.user as User);
       } else {
         this.currentUser.next(false);
       }
