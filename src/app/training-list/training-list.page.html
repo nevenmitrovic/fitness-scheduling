@@ -48,7 +48,7 @@
 
 <ion-footer [translucent]="true">
   <ion-toolbar>
-    <ion-button fill="outline" slot="start">
+    <ion-button fill="outline" slot="start" [disabled]="isAdmin()">
       Kreiraj novi trening
       <ion-icon slot="end" name="create"></ion-icon>
     </ion-button>

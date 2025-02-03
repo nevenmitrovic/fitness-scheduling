@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ModalController, IonRouterOutlet } from '@ionic/angular';
 
 import { TrainingEventsRepositoryService } from '../training-events-repository/training-events-repository.service';
+import { UserService } from '../api/user.service';
 
 import { TrainingEvent } from '../api/models/trainingEvent';
 import { IUser } from '../api/models/user';
@@ -19,7 +20,7 @@ import { TrainingCardModalComponent } from '../training-card-modal/training-card
 export class TrainingList {
   trainingEvents: TrainingEvent[] = [];
   loaded = false;
-  user$ = true;
+  user$: IUser | null = null;
 
   private readonly trainingEventsRepository = inject(
     TrainingEventsRepositoryService
@@ -27,11 +28,15 @@ export class TrainingList {
   private readonly modalController = inject(ModalController);
   private readonly routerOutlet = inject(IonRouterOutlet);
   private readonly router = inject(Router);
+  private readonly userService = inject(UserService);
 
   async ngOnInit(): Promise<void> {
-    if (!this.user$) this.router.navigate(['/account']);
-    this.trainingEvents =
-      await this.trainingEventsRepository.getTrainingEventsFromStorage();
+    await this.userService.loadUser();
+    this.userService.getUserProfile().subscribe((user) => {
+      this.user$ = user;
+      if (!this.user$) this.router.navigate(['/account/login']);
+    });
+    this.trainingEvents = await this.trainingEventsRepository.getTrainingEventsFromStorage();
     this.loaded = true;
   }
 
@@ -57,5 +62,9 @@ export class TrainingList {
     });
     await modal.present();
     await modal.onDidDismiss();
+  }
+
+  isAdmin(): boolean {
+    return this.user$?.role === 'admin';
   }
 }

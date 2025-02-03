@@ -8,12 +8,13 @@ import {
   User,
 } from '@supabase/supabase-js';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, from, map } from 'rxjs';
 
 import { ISignIn } from './models/signIn';
 import { ISignUp } from './models/signUp';
 
 import { environment } from 'src/environments/environment';
+import { IUser } from './models/user';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,6 @@ export class UserService {
   constructor() {
     this.supabase.auth.onAuthStateChange((event, sess) => {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-        console.log('SET USER');
         this.currentUser.next(sess?.user as User);
       } else {
         this.currentUser.next(false);
@@ -60,6 +60,7 @@ export class UserService {
       });
       if (!res.error) {
         await this.createProfile(data, res.data.user?.id as string);
+        this.currentUser.next(res.data.user as User);
       }
       return res;
     } catch (e) {
@@ -82,7 +83,10 @@ export class UserService {
 
   async signIn(credentials: ISignIn): Promise<AuthResponse> {
     try {
-      return this.supabase.auth.signInWithPassword(credentials);
+      const res = await this.supabase.auth.signInWithPassword(credentials);
+      if (res.error) throw res.error;
+      this.currentUser.next(res.data.user as User);
+      return res;
     } catch (e) {
       console.error(e);
       throw e;
@@ -91,6 +95,7 @@ export class UserService {
 
   async signOut(): Promise<void> {
     await this.supabase.auth.signOut();
+    this.currentUser.next(false);
     this.router.navigateByUrl('/', { replaceUrl: true });
   }
 
@@ -101,5 +106,23 @@ export class UserService {
   getCurrentUserId(): string | null {
     if (!this.currentUser.value) return null;
     return (this.currentUser.value as User).id;
+  }
+
+  getUserProfile(): Observable<IUser | null> {
+    return from(
+      this.supabase
+        .from('fitness-scheduling-users')
+        .select('*')
+        .eq('id', this.getCurrentUserId())
+        .single()
+    ).pipe(
+      map((response) => {
+        if (response.error) {
+          console.error(response.error);
+          return null;
+        }
+        return response.data as IUser;
+      })
+    );
   }
 }
