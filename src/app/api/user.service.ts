@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 import {
   createClient,
   SupabaseClient,
   AuthResponse,
+  User,
 } from '@supabase/supabase-js';
+
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ISignUp } from './models/signUp';
 
@@ -14,10 +18,36 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class UserService {
+  private currentUser!: BehaviorSubject<User | boolean>;
+
   private readonly supabase: SupabaseClient = createClient(
     environment.supabaseConfig.supabaseUrl,
     environment.supabaseConfig.supabaseKey
   );
+  private readonly router = inject(Router);
+
+  constructor() {
+    this.supabase.auth.onAuthStateChange((event, sess) => {
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        console.log('SET USER');
+        if (sess !== null) this.currentUser.next(sess.user);
+      } else {
+        this.currentUser.next(false);
+      }
+    });
+    this.loadUser();
+  }
+
+  async loadUser() {
+    if (this.currentUser.value) return;
+
+    const user = await this.supabase.auth.getUser();
+    if (user.data.user) {
+      this.currentUser.next(user.data.user);
+    } else {
+      this.currentUser.next(false);
+    }
+  }
 
   async signUp(data: ISignUp): Promise<AuthResponse> {
     try {
@@ -45,5 +75,19 @@ export class UserService {
       console.error(e);
       throw e;
     }
+  }
+
+  async signOut(): Promise<void> {
+    await this.supabase.auth.signOut();
+    this.router.navigateByUrl('/', { replaceUrl: true });
+  }
+
+  getCurrentUser(): Observable<User | boolean> {
+    return this.currentUser.asObservable();
+  }
+
+  getCurrentUserId(): string | null {
+    if (!this.currentUser.value) return null;
+    return (this.currentUser.value as User).id;
   }
 }

@@ -41,7 +41,7 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {}
 
-  navigateToSignIn() {
+  navigateToSignIn(): void {
     this.router.navigate(['/account/sign-in']);
   }
 
@@ -71,6 +71,7 @@ export class SignUpComponent implements OnInit {
     } finally {
       this.signUpForm.reset();
       await loading.dismiss();
+      this.navigateToSignIn();
     }
   }
 }
