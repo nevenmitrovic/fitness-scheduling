@@ -30,7 +30,7 @@ export class SignInComponent implements OnInit {
 
   ngOnInit() {}
 
-  navigateToSignUp() {
+  async navigateToSignUp(): Promise<void> {
     this.router.navigate(['/account/sign-up']);
   }
 
@@ -44,13 +44,19 @@ export class SignInComponent implements OnInit {
     });
     await loading.present();
     try {
+      const res = await this.userService.signIn(this.signInForm.value);
+      if (res.error) {
+        throw res.error;
+      }
+      await this.router.navigate(['/']);
     } catch (e) {
       console.error(e);
-      this.alertController.create({
+      const alert = await this.alertController.create({
         header: 'Greška',
-        message: 'Neispravni podaci',
+        message: 'Neispravni podaci, pokusajte ponovo',
         buttons: ['OK'],
       });
+      await alert.present();
     } finally {
       await loading.dismiss();
     }

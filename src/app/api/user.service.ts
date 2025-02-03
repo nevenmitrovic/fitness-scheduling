@@ -10,6 +10,7 @@ import {
 
 import { BehaviorSubject, Observable } from 'rxjs';
 
+import { ISignIn } from './models/signIn';
 import { ISignUp } from './models/signUp';
 
 import { environment } from 'src/environments/environment';
@@ -71,6 +72,15 @@ export class UserService {
       await this.supabase
         .from('fitness-scheduling-users')
         .insert({ ...restData, id, role: 'user' });
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
+  async signIn(credentials: ISignIn): Promise<AuthResponse> {
+    try {
+      return this.supabase.auth.signInWithPassword(credentials);
     } catch (e) {
       console.error(e);
       throw e;

@@ -41,7 +41,7 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {}
 
-  navigateToSignIn(): void {
+  async navigateToSignIn(): Promise<void> {
     this.router.navigate(['/account/sign-in']);
   }
 
@@ -59,7 +59,7 @@ export class SignUpComponent implements OnInit {
       if (res.error) {
         throw res.error;
       }
-      await this.router.navigate(['/']);
+      await this.navigateToSignIn();
     } catch (e) {
       console.error(e);
       const alert = await this.alertController.create({
@@ -71,7 +71,6 @@ export class SignUpComponent implements OnInit {
     } finally {
       this.signUpForm.reset();
       await loading.dismiss();
-      this.navigateToSignIn();
     }
   }
 }
