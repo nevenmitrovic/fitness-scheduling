@@ -37,16 +37,14 @@ export class TrainingList {
       this.user$ = user;
       if (!this.user$) this.router.navigate(['/account/login']);
     });
-    this.trainingEvents =
-      await this.trainingEventsRepository.getTrainingEventsFromStorage();
+    this.trainingEvents = await this.trainingEventsRepository.getTrainingEventsFromStorage();
     this.loaded = true;
   }
 
   async refreshTrainingEvents(): Promise<void> {
     try {
       this.loaded = false;
-      this.trainingEvents =
-        await this.trainingEventsRepository.getTrainingEventsFromApi();
+      this.trainingEvents = await this.trainingEventsRepository.getTrainingEventsFromApi();
     } catch (e) {
       console.error(e);
     } finally {

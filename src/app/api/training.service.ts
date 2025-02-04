@@ -27,4 +27,42 @@ export class TrainingService {
       throw e;
     }
   }
+
+  async applyForTraining(uID: string, tID: string): Promise<any> {
+    try {
+      const res = await this.supabase
+        .from('training_event_exercisers')
+        .insert({ training_event_id: tID, user_id: uID });
+      if (res.error) throw res.error;
+      return res;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
+  async getExercisers(tID: string): Promise<any> {
+    try {
+      const res = await this.supabase
+        .from('training_event_exercisers')
+        .select('user_id')
+        .eq('training_event_id', tID);
+      if (res.error) throw res.error;
+      return res;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+
+  async getTrainingEvents(): Promise<any> {
+    try {
+      const res = await this.supabase.from('training_events').select('*');
+      if (res.error) throw res.error;
+      return res;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
 }

@@ -14,7 +14,7 @@ export class ApiMockService implements IApi {
   delay = 600;
   private readonly trainingEvents = [...apiTrainingEvents];
 
-  getTrainingEvents(): Observable<TrainingEvent[]> {
+  getTrainingEvents(): Observable<any> {
     return of(this.trainingEvents).pipe(delay(this.delay));
   }
 
