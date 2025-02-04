@@ -64,6 +64,12 @@ export class SignUpComponent implements OnInit {
       if (res.error) {
         throw res.error;
       }
+      const alert = await this.alertController.create({
+        header: 'Uspesna registracija',
+        message: 'Uspesno ste se registrovali, molimo vas potvrdite vas email',
+        buttons: ['OK'],
+      });
+      await alert.present();
       await this.navigateToSignIn();
     } catch (e) {
       console.error(e);
