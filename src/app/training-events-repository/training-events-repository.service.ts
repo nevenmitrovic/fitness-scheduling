@@ -4,6 +4,7 @@ import { TrainingEvent } from '../api/models/trainingEvent';
 
 import { ApiMockService } from '../api/api.mock.service';
 import { firstValueFrom, map, tap } from 'rxjs';
+import { TrainingService } from '../api/training.service';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class TrainingEventsRepositoryService {
     );
   }
 
-  clearTrainingEventsStorage(): void {
+  private clearTrainingEventsStorage(): void {
     localStorage.removeItem('trainingEvents');
   }
 }

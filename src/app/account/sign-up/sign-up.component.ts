@@ -56,7 +56,7 @@ export class SignUpComponent implements OnInit {
     }
 
     const loading = await this.loadingController.create({
-      message: 'Signing up...',
+      message: 'Kreiranje naloga...',
     });
     await loading.present();
     try {

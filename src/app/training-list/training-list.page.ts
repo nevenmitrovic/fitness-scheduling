@@ -10,6 +10,7 @@ import { TrainingEvent } from '../api/models/trainingEvent';
 import { IUser } from '../api/models/user';
 
 import { TrainingCardModalComponent } from '../training-card-modal/training-card-modal.component';
+import { NewTrainingModalComponent } from '../new-training-modal/new-training-modal.component';
 
 @Component({
   selector: 'app-training-list',
@@ -36,7 +37,8 @@ export class TrainingList {
       this.user$ = user;
       if (!this.user$) this.router.navigate(['/account/login']);
     });
-    this.trainingEvents = await this.trainingEventsRepository.getTrainingEventsFromStorage();
+    this.trainingEvents =
+      await this.trainingEventsRepository.getTrainingEventsFromStorage();
     this.loaded = true;
   }
 
@@ -66,5 +68,14 @@ export class TrainingList {
 
   isAdmin(): boolean {
     return this.user$?.role === 'admin';
+  }
+
+  async openNewTrainingModal(): Promise<void> {
+    const modal = await this.modalController.create({
+      component: NewTrainingModalComponent,
+      presentingElement: this.routerOutlet.nativeEl,
+    });
+    await modal.present();
+    await modal.onDidDismiss();
   }
 }

@@ -7,9 +7,20 @@ import { TrainingList } from './training-list.page';
 
 import { TrainingListRoutingModule } from './training-list-routing.module';
 import { TrainingCardModalComponent } from '../training-card-modal/training-card-modal.component';
+import { NewTrainingModalComponent } from '../new-training-modal/new-training-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, IonicModule, TrainingListRoutingModule],
-  declarations: [TrainingList, TrainingCardModalComponent],
+  imports: [
+    CommonModule,
+    IonicModule,
+    TrainingListRoutingModule,
+    ReactiveFormsModule,
+  ],
+  declarations: [
+    TrainingList,
+    TrainingCardModalComponent,
+    NewTrainingModalComponent,
+  ],
 })
 export class TrainingListModule {}

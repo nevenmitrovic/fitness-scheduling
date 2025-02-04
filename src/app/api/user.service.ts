@@ -73,7 +73,7 @@ export class UserService {
     try {
       const { password, ...restData } = data;
       await this.supabase
-        .from('fitness-scheduling-users')
+        .from('users_profiles')
         .insert({ ...restData, id, role: 'user' });
     } catch (e) {
       console.error(e);
@@ -111,7 +111,7 @@ export class UserService {
   getUserProfile(): Observable<IUser | null> {
     return from(
       this.supabase
-        .from('fitness-scheduling-users')
+        .from('users_profiles')
         .select('*')
         .eq('id', this.getCurrentUserId())
         .single()

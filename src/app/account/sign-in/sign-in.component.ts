@@ -45,7 +45,7 @@ export class SignInComponent implements OnInit {
     }
 
     const loading = await this.loadingController.create({
-      message: 'Signing in...',
+      message: 'Logovanje u toku...',
     });
     await loading.present();
     try {
