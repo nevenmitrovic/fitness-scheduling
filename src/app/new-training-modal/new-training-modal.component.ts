@@ -32,7 +32,6 @@ export class NewTrainingModalComponent {
   }
 
   async setTrainingEvent(): Promise<void> {
-    console.log(this.trainingForm.value.date);
     const loading = await this.loadingController.create({
       spinner: 'circles',
       message: 'Kreiranje treninga...',

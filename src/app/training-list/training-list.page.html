@@ -8,7 +8,11 @@
   <ng-container *ngIf="loaded; else loading">
     <ng-container *ngIf="trainingEvents.length > 0" ; else noTrainingEvents>
       <ion-list inset>
-        <ion-card *ngFor="let e of trainingEvents" class="ion-padding">
+        <ion-card
+          *ngFor="let e of trainingEvents"
+          class="ion-padding"
+          (click)="openTrainingCardModal(e.exercisers)"
+        >
           <ion-card-header>
             <ion-card-title> {{ e.date | date:'dd.MM.YYYY.' }} </ion-card-title>
             <ion-card-subtitle>
@@ -19,7 +23,7 @@
           <ion-card-content>
             <p>
               Preostala mesta za ovaj termin:
-              <span>1/8</span>
+              <span>{{ e.exercisers.length }}/8</span>
             </p>
           </ion-card-content>
 

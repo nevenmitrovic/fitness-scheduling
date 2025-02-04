@@ -41,12 +41,12 @@ export class TrainingService {
     }
   }
 
-  async getExercisers(tID: string): Promise<any> {
+  async getExercisersFromTraining(tID: string): Promise<any> {
     try {
       const res = await this.supabase
         .from('training_event_exercisers')
         .select('user_id')
-        .eq('training_event_id', tID);
+        .eq('training_event_id', tID)
       if (res.error) throw res.error;
       return res;
     } catch (e) {

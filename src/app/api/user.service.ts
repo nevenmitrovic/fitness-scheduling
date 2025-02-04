@@ -125,4 +125,16 @@ export class UserService {
       })
     );
   }
+
+  getAllProfiles(): Observable<IUser[]> {
+    return from(this.supabase.from('users_profiles').select('*')).pipe(
+      map((r) => {
+        if (r.error) {
+          console.error(r.error);
+          return [];
+        }
+        return r.data as IUser[];
+      })
+    );
+  }
 }
