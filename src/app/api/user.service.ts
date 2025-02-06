@@ -1,5 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-import { Router } from '@angular/router';
 
 import {
   createClient,
@@ -28,29 +27,17 @@ export class UserService {
     environment.supabaseConfig.supabaseUrl,
     environment.supabaseConfig.supabaseKey
   );
-  private readonly router = inject(Router);
 
   constructor() {
     this.onAuthStateChange();
-    this.loadUser();
-  }
-
-  async loadUser() {
-    if (this.currentUser.value) return;
-
-    const user = await this.supabase.auth.getUser();
-    if (user.data.user) {
-      this.currentUser.next(user.data.user);
-    } else {
-      this.currentUser.next(false);
-    }
   }
 
   onAuthStateChange(): void {
     this.supabase.auth.onAuthStateChange((event, sess) => {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         this.currentUser.next(sess?.user as User);
-      } else {
+      }
+      if (event === 'SIGNED_OUT') {
         this.currentUser.next(false);
       }
     });
@@ -100,7 +87,7 @@ export class UserService {
   async signOut(): Promise<void> {
     await this.supabase.auth.signOut();
     this.currentUser.next(false);
-    this.router.navigateByUrl('/', { replaceUrl: true });
+    localStorage.clear();
   }
 
   getCurrentUser(): Observable<User | boolean> {

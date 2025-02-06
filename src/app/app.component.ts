@@ -1,4 +1,4 @@
-import { Component, inject, HostListener } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 
 import { UserService } from './api/user.service';
 
@@ -8,8 +8,12 @@ import { UserService } from './api/user.service';
   styleUrls: ['app.component.scss'],
   standalone: false,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   private readonly userService = inject(UserService);
+
+  ngOnInit(): void {
+    this.userService.onAuthStateChange();
+  }
 
   // @HostListener('window:unload', ['$event'])
   // onUnload(event: Event): void {
