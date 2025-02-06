@@ -26,6 +26,7 @@
               <span>{{ e.exercisers.length }}/8</span>
             </p>
           </ion-card-content>
+          
           <ng-container *ngIf="!isUserApplied(e.exercisers); else applied">
             <ion-button
               (click)="addUserToTraining(e.id, $event)"
@@ -34,6 +35,7 @@
               Prijavi se na trening
             </ion-button>
           </ng-container>
+
           <ng-template #applied>
             <ion-button
               (click)="cancelApplication(e.id, $event)"
@@ -41,6 +43,7 @@
               Otkazi prijavu
             </ion-button>
           </ng-template>
+
         </ion-card>
       </ion-list>
     </ng-container>

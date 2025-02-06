@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject, HostListener } from '@angular/core';
+
+import { UserService } from './api/user.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,11 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
+  private readonly userService = inject(UserService);
+
+  // @HostListener('window:unload', ['$event'])
+  // onUnload(event: Event): void {
+  //   localStorage.clear();
+  //   this.userService.signOut();
+  // }
 }

@@ -31,13 +31,7 @@ export class UserService {
   private readonly router = inject(Router);
 
   constructor() {
-    this.supabase.auth.onAuthStateChange((event, sess) => {
-      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-        this.currentUser.next(sess?.user as User);
-      } else {
-        this.currentUser.next(false);
-      }
-    });
+    this.onAuthStateChange();
     this.loadUser();
   }
 
@@ -50,6 +44,16 @@ export class UserService {
     } else {
       this.currentUser.next(false);
     }
+  }
+
+  onAuthStateChange(): void {
+    this.supabase.auth.onAuthStateChange((event, sess) => {
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        this.currentUser.next(sess?.user as User);
+      } else {
+        this.currentUser.next(false);
+      }
+    });
   }
 
   async signUp(data: ISignUp): Promise<AuthResponse> {

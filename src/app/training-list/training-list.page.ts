@@ -44,13 +44,11 @@ export class TrainingList {
   private readonly profilesRepository = inject(ProfilesRepositoryService);
 
   async ngOnInit(): Promise<void> {
-    await this.userService.loadUser();
     this.userService.getUserProfile().subscribe((user) => {
       this.user$ = user;
       if (!this.user$) this.router.navigate(['/account/login']);
     });
-    this.trainingEvents =
-      await this.trainingEventsRepository.getTrainingEventsFromStorage();
+    this.trainingEvents = await this.trainingEventsRepository.getTrainingEventsFromStorage();
     this.profiles = await this.profilesRepository.getProfilesFromStorage();
     this.loaded = true;
   }
@@ -174,7 +172,8 @@ export class TrainingList {
               console.error(e);
               const alert = await this.alertController.create({
                 header: 'Greška',
-                message: 'Došlo je do greške prilikom odjavljivanja sa treninga.',
+                message:
+                  'Došlo je do greške prilikom odjavljivanja sa treninga.',
                 buttons: ['OK'],
               });
               await alert.present();
