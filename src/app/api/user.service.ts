@@ -126,15 +126,14 @@ export class UserService {
     );
   }
 
-  getAllProfiles(): Observable<IUser[]> {
-    return from(this.supabase.from('users_profiles').select('*')).pipe(
-      map((r) => {
-        if (r.error) {
-          console.error(r.error);
-          return [];
-        }
-        return r.data as IUser[];
-      })
-    );
+  async getAllProfiles(): Promise<IUser[]> {
+    try {
+      const res = await this.supabase.from('users_profiles').select('*');
+      if (res.error) throw res.error;
+      return res.data;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
   }
 }

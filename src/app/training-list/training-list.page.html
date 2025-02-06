@@ -11,7 +11,7 @@
         <ion-card
           *ngFor="let e of trainingEvents"
           class="ion-padding"
-          (click)="openTrainingCardModal(e.exercisers)"
+          (click)="openTrainingCardModal(getFilteredProfiles(e.exercisers))"
         >
           <ion-card-header>
             <ion-card-title> {{ e.date | date:'dd.MM.YYYY.' }} </ion-card-title>

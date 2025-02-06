@@ -8,11 +8,12 @@ import {
   AlertController,
 } from '@ionic/angular';
 
+import { ProfilesRepositoryService } from '../profiles-repository/profiles-repository.service';
 import { TrainingEventsRepositoryService } from '../training-events-repository/training-events-repository.service';
 import { UserService } from '../api/user.service';
 import { TrainingService } from '../api/training.service';
 
-import { TrainingEvent } from '../api/models/trainingEvent';
+import { IUUID, TrainingEvent } from '../api/models/trainingEvent';
 import { IUser } from '../api/models/user';
 
 import { TrainingCardModalComponent } from '../training-card-modal/training-card-modal.component';
@@ -25,6 +26,7 @@ import { NewTrainingModalComponent } from '../new-training-modal/new-training-mo
   standalone: false,
 })
 export class TrainingList {
+  profiles: IUser[] = [];
   trainingEvents: TrainingEvent[] = [];
   loaded = false;
   user$: IUser | null = null;
@@ -39,6 +41,7 @@ export class TrainingList {
   private readonly trainingService = inject(TrainingService);
   private readonly loadingController = inject(LoadingController);
   private readonly alertController = inject(AlertController);
+  private readonly profilesRepository = inject(ProfilesRepositoryService);
 
   async ngOnInit(): Promise<void> {
     await this.userService.loadUser();
@@ -48,6 +51,7 @@ export class TrainingList {
     });
     this.trainingEvents =
       await this.trainingEventsRepository.getTrainingEventsFromStorage();
+    this.profiles = await this.profilesRepository.getProfilesFromStorage();
     this.loaded = true;
   }
 
@@ -55,7 +59,7 @@ export class TrainingList {
     e.stopPropagation();
 
     const ex = await this.trainingService.getExercisersFromTraining(tID);
-    if(ex.length === 8) throw new Error('No more places available');
+    if (ex.length === 8) throw new Error('No more places available');
 
     const loading = await this.loadingController.create({
       message: 'Prijavljivanje na trening u toku...',
@@ -120,5 +124,13 @@ export class TrainingList {
     await modal.present();
     await modal.onDidDismiss();
     await this.refreshTrainingEvents();
+  }
+
+  getFilteredProfiles(ex: IUUID[]): IUser[] {
+    let arr: IUser[] = [];
+    ex.forEach((u) => {
+      arr = this.profiles.filter((p) => p.id === u.user_id);
+    });
+    return arr;
   }
 }
