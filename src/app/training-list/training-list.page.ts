@@ -74,7 +74,7 @@ export class TrainingList {
         buttons: ['OK'],
       });
       await done.present();
-      await this.refreshTrainingEvents();
+      await this.refreshTrainingEventsAndProfiles();
     } catch (e) {
       console.error(e);
       const alert = await this.alertController.create({
@@ -88,11 +88,12 @@ export class TrainingList {
     }
   }
 
-  async refreshTrainingEvents(): Promise<void> {
+  async refreshTrainingEventsAndProfiles(): Promise<void> {
     try {
       this.loaded = false;
       this.trainingEvents =
         await this.trainingEventsRepository.getTrainingEventsFromApi();
+      this.profiles = await this.profilesRepository.getProfilesFromApi();
     } catch (e) {
       console.error(e);
     } finally {
@@ -123,7 +124,7 @@ export class TrainingList {
     });
     await modal.present();
     await modal.onDidDismiss();
-    await this.refreshTrainingEvents();
+    await this.refreshTrainingEventsAndProfiles();
   }
 
   getFilteredProfiles(ex: IUUID[]): IUser[] {
@@ -132,5 +133,58 @@ export class TrainingList {
       arr = this.profiles.filter((p) => p.id === u.user_id);
     });
     return arr;
+  }
+
+  isUserApplied(ex: IUUID[]): boolean {
+    if (!this.user$) return false;
+    return ex.some((u) => u.user_id === this.user$?.id);
+  }
+
+  async cancelApplication(tID: string, e: Event): Promise<void> {
+    e.stopPropagation();
+    const alert = await this.alertController.create({
+      header: 'Odjava sa treninga',
+      message: 'Da li ste sigurni da želite da se odjavite sa treninga?',
+      buttons: [
+        {
+          text: 'Odustani',
+          role: 'cancel',
+        },
+        {
+          text: 'Odjavi se',
+          handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Odjavljivanje sa treninga u toku...',
+            });
+            await loading.present();
+            try {
+              if (!this.user$) return;
+              await this.trainingService.removeUserFromTraining(
+                this.user$.id,
+                tID
+              );
+              const done = await this.alertController.create({
+                header: 'Odjava uspešna',
+                message: 'Uspešno ste se odjavili sa treninga.',
+                buttons: ['OK'],
+              });
+              await done.present();
+              await this.refreshTrainingEventsAndProfiles();
+            } catch (e) {
+              console.error(e);
+              const alert = await this.alertController.create({
+                header: 'Greška',
+                message: 'Došlo je do greške prilikom odjavljivanja sa treninga.',
+                buttons: ['OK'],
+              });
+              await alert.present();
+            } finally {
+              await loading.dismiss();
+            }
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }
