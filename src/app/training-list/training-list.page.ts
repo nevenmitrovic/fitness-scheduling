@@ -1,10 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ModalController, IonRouterOutlet } from '@ionic/angular';
+import {
+  ModalController,
+  IonRouterOutlet,
+  LoadingController,
+  AlertController,
+} from '@ionic/angular';
 
 import { TrainingEventsRepositoryService } from '../training-events-repository/training-events-repository.service';
 import { UserService } from '../api/user.service';
+import { TrainingService } from '../api/training.service';
 
 import { TrainingEvent } from '../api/models/trainingEvent';
 import { IUser } from '../api/models/user';
@@ -30,6 +36,9 @@ export class TrainingList {
   private readonly routerOutlet = inject(IonRouterOutlet);
   private readonly router = inject(Router);
   private readonly userService = inject(UserService);
+  private readonly trainingService = inject(TrainingService);
+  private readonly loadingController = inject(LoadingController);
+  private readonly alertController = inject(AlertController);
 
   async ngOnInit(): Promise<void> {
     await this.userService.loadUser();
@@ -40,6 +49,39 @@ export class TrainingList {
     this.trainingEvents =
       await this.trainingEventsRepository.getTrainingEventsFromStorage();
     this.loaded = true;
+  }
+
+  async addUserToTraining(tID: string, e: Event): Promise<void> {
+    e.stopPropagation();
+
+    const ex = await this.trainingService.getExercisersFromTraining(tID);
+    if(ex.length === 8) throw new Error('No more places available');
+
+    const loading = await this.loadingController.create({
+      message: 'Prijavljivanje na trening u toku...',
+    });
+    await loading.present();
+    try {
+      if (!this.user$) return;
+      await this.trainingService.applyForTraining(this.user$.id, tID);
+      const done = await this.alertController.create({
+        header: 'Prijava uspešna',
+        message: 'Uspesno ste se prijavili na trening.',
+        buttons: ['OK'],
+      });
+      await done.present();
+      await this.refreshTrainingEvents();
+    } catch (e) {
+      console.error(e);
+      const alert = await this.alertController.create({
+        header: 'Greška',
+        message: 'Došlo je do greške prilikom prijavljivanja na trening.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    } finally {
+      await loading.dismiss();
+    }
   }
 
   async refreshTrainingEvents(): Promise<void> {

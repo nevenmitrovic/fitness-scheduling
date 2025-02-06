@@ -27,7 +27,9 @@
             </p>
           </ion-card-content>
 
-          <ion-button>Prijavi se na trening</ion-button>
+          <ion-button (click)="addUserToTraining(e.id, $event)">
+            Prijavi se na trening
+          </ion-button>
         </ion-card>
       </ion-list>
     </ng-container>
