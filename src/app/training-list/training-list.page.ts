@@ -48,7 +48,8 @@ export class TrainingList {
       this.user$ = user;
       if (!this.user$) this.router.navigate(['/account/login']);
     });
-    this.trainingEvents = await this.trainingEventsRepository.getTrainingEventsFromStorage();
+    this.trainingEvents =
+      await this.trainingEventsRepository.getTrainingEventsFromStorage();
     this.profiles = await this.profilesRepository.getProfilesFromStorage();
     this.loaded = true;
   }
@@ -128,7 +129,9 @@ export class TrainingList {
   getFilteredProfiles(ex: IUUID[]): IUser[] {
     let arr: IUser[] = [];
     ex.forEach((u) => {
-      arr = this.profiles.filter((p) => p.id === u.user_id);
+      this.profiles.filter((p) => {
+        if (p.id === u.user_id) arr.push(p);
+      });
     });
     return arr;
   }

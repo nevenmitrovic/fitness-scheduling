@@ -28,10 +28,6 @@ export class UserService {
     environment.supabaseConfig.supabaseKey
   );
 
-  constructor() {
-    this.onAuthStateChange();
-  }
-
   onAuthStateChange(): void {
     this.supabase.auth.onAuthStateChange((event, sess) => {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
