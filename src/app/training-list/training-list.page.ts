@@ -100,16 +100,46 @@ export class TrainingList {
     }
   }
 
-  async openTrainingCardModal(exercisers: IUser[]): Promise<void> {
+  async openTrainingCardModal(exercisers: IUser[], tID: string): Promise<void> {
     const modal = await this.modalController.create({
       component: TrainingCardModalComponent,
       presentingElement: this.routerOutlet.nativeEl,
       componentProps: {
         exercisers,
+        user: this.user$,
       },
     });
     await modal.present();
-    await modal.onDidDismiss();
+    const dismiss = await modal.onDidDismiss();
+    if (dismiss.data) {
+      const res = await this.trainingService.removeUserFromTraining(
+        dismiss.data,
+        tID
+      );
+      if (res.status === 204) {
+        await this.refreshTrainingEventsAndProfiles();
+        if (this.user$?.role === 'admin') {
+          const alert = await this.alertController.create({
+            header: 'Uspesno',
+            message: 'Uspesno ste odjavili korisnika sa treninga.',
+            buttons: ['OK'],
+          });
+          await alert.present();
+        }
+        const alert = await this.alertController.create({
+          header: 'Uspesno',
+          message: 'Uspesno ste se odjavili sa treninga.',
+          buttons: ['OK'],
+        });
+        await alert.present();
+      }
+      const alert = await this.alertController.create({
+        header: 'Greška',
+        message: 'Došlo je do greške prilikom odjavljivanja sa treninga.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+    }
   }
 
   isAdmin(): boolean {

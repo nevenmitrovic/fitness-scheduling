@@ -16,7 +16,11 @@
         <ion-label>
           <h2>{{ exerciser.fullName }}</h2>
         </ion-label>
-        <ion-button>Izbrisi</ion-button>
+        <ng-container *ngIf="exerciser.id === user.id || user.role === 'admin'">
+          <ion-button (click)="removeUserFromTraining(exerciser.id)">
+            Izbrisi
+          </ion-button>
+        </ng-container>
       </ion-item>
     </ion-list>
   </ng-container>

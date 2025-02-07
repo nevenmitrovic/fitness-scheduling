@@ -12,13 +12,18 @@ import { IUser } from '../api/models/user';
 })
 export class TrainingCardModalComponent implements OnInit {
   @Input({ required: true }) exercisers!: IUser[];
+  @Input({ required: true }) user!: IUser;
 
   private readonly modalController = inject(ModalController);
 
   ngOnInit() {
-    if (!this.exercisers) {
+    if (!this.exercisers || !this.user) {
       this.closeModal();
     }
+  }
+
+  removeUserFromTraining(id: string): void {
+    this.modalController.dismiss(id);
   }
 
   closeModal() {

@@ -11,7 +11,7 @@
         <ion-card
           *ngFor="let e of trainingEvents"
           class="ion-padding"
-          (click)="openTrainingCardModal(getFilteredProfiles(e.exercisers))"
+          (click)="openTrainingCardModal(getFilteredProfiles(e.exercisers), e.id)"
         >
           <ion-card-header>
             <ion-card-title> {{ e.date | date:'dd.MM.YYYY.' }} </ion-card-title>
@@ -26,7 +26,7 @@
               <span>{{ e.exercisers.length }}/8</span>
             </p>
           </ion-card-content>
-          
+
           <ng-container *ngIf="!isUserApplied(e.exercisers); else applied">
             <ion-button
               (click)="addUserToTraining(e.id, $event)"
@@ -37,13 +37,10 @@
           </ng-container>
 
           <ng-template #applied>
-            <ion-button
-              (click)="cancelApplication(e.id, $event)"
-            >
+            <ion-button (click)="cancelApplication(e.id, $event)">
               Otkazi prijavu
             </ion-button>
           </ng-template>
-
         </ion-card>
       </ion-list>
     </ng-container>
