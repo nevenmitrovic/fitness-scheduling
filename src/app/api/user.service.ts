@@ -35,6 +35,7 @@ export class UserService {
       }
       if (event === 'SIGNED_OUT') {
         this.currentUser.next(false);
+        localStorage.clear();
       }
     });
   }
