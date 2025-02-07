@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Kreiraj novi trening</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">Zatvori</ion-button>
@@ -8,16 +8,19 @@
 
   <ion-content fullscreen="true">
     <form (ngSubmit)="setTrainingEvent()" [formGroup]="trainingForm">
-      <ion-list>
-        <ion-item>
+      <ion-list class="ion-no-border">
+        <ion-item class="ion-no-border">
           <ion-label position="stacked">Datum i vreme treninga</ion-label>
-          <ion-item class="ion-justify-content-center ion-no-border round">
+          <ion-item class="ion-justify-content-center ion-no-border">
             <ion-datetime
               formControlName="date"
-              locale="sr-RS"
+              locale="sr-Latn-RS"
               presentation="date-time"
               [min]="minDate"
-            />
+              color="rose"
+            >
+              <span slot="time-label">Vreme</span>
+            </ion-datetime>
           </ion-item>
         </ion-item>
         <ion-text
@@ -31,7 +34,7 @@
           datum treninga je obavezan
         </ion-text>
       </ion-list>
-      <ion-button expand="full" type="submit" class="px-15">
+      <ion-button expand="block" type="submit" class="px-15">
         Kreiraj trening
       </ion-button>
     </form>

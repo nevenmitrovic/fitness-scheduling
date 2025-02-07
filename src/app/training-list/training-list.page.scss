@@ -1,17 +1,9 @@
-ion-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
-ion-list ion-card:last-child {
-  margin-bottom: 60px;
-}
-
 ion-spinner {
   width: 100px;
   height: 100px;
+  color: #7060FF;
 }
+
 
 .spinner-container {
   display: flex;

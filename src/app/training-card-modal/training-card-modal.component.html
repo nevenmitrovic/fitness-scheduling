@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Vezbaci za ovaj trening</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">Zatvori</ion-button>
@@ -14,7 +14,7 @@
         (click)="openProfileDetails(exerciser)"
       >
         <ion-avatar slot="start">
-          <ion-img src="assets/icon/favicon.png"></ion-img>
+          <ion-icon name="person" color="primary" size="large" />
         </ion-avatar>
         <ion-label>
           <h2>{{ exerciser.fullName }}</h2>

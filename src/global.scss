@@ -36,7 +36,6 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
-
 .center-text {
   text-align: center;
 }
@@ -52,4 +51,39 @@
 
 .full-width {
   width: 100%;
+}
+
+ion-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+ion-list ion-card:last-child {
+  margin-bottom: 60px;
+}
+
+ion-card {
+  color: rgba(112, 96, 255, 0.7);
+
+  ion-button {
+    --background-activated: #7060ff67;
+    --background: rgba(112, 96, 255);
+  }
+}
+
+ion-card-title {
+  color: rgba(112, 96, 255);
+}
+
+ion-title {
+  color: white;
+}
+
+ion-card-subtitle {
+  color: rgba(112, 96, 255, 0.8);
+}
+
+ion-item {
+  color: rgba(112, 96, 255);
 }
