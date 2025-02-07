@@ -125,6 +125,7 @@ export class TrainingList {
             buttons: ['OK'],
           });
           await alert.present();
+          return;
         }
         const alert = await this.alertController.create({
           header: 'Uspesno',
@@ -132,6 +133,7 @@ export class TrainingList {
           buttons: ['OK'],
         });
         await alert.present();
+        return;
       }
       const alert = await this.alertController.create({
         header: 'Greška',
