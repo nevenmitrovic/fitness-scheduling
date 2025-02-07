@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Detalji profila</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Zatvori</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Ime i prezime</ion-label>
+      <ion-text>{{ user.fullName }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Email adresa</ion-label>
+      <ion-text>{{ user.email }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Datum rodjenja</ion-label>
+      <ion-text>{{ user.dateOfBirth | date : "dd.MM.YYYY." }}</ion-text>
+    </ion-item>
+    <ion-item>
+      <ion-label>Telefon</ion-label>
+      <ion-text>{{ user.phone }}</ion-text>
+    </ion-item>
+  </ion-list>
+</ion-content>

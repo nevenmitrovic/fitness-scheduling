@@ -9,7 +9,10 @@
 <ion-content>
   <ng-container *ngIf="exercisers.length > 0; else noExercisers">
     <ion-list>
-      <ion-item *ngFor="let exerciser of exercisers">
+      <ion-item
+        *ngFor="let exerciser of exercisers"
+        (click)="openProfileDetails(exerciser)"
+      >
         <ion-avatar slot="start">
           <ion-img src="assets/icon/favicon.png"></ion-img>
         </ion-avatar>
@@ -17,7 +20,7 @@
           <h2>{{ exerciser.fullName }}</h2>
         </ion-label>
         <ng-container *ngIf="exerciser.id === user.id || user.role === 'admin'">
-          <ion-button (click)="removeUserFromTraining(exerciser.id)">
+          <ion-button (click)="removeUserFromTraining(exerciser.id, $event)">
             Izbrisi
           </ion-button>
         </ng-container>

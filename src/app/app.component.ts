@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.initializeApp();
+    this.userService.onAuthStateChange();
   }
 
   private async initializeApp(): Promise<void> {

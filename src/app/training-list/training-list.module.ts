@@ -9,6 +9,7 @@ import { TrainingListRoutingModule } from './training-list-routing.module';
 import { TrainingCardModalComponent } from '../training-card-modal/training-card-modal.component';
 import { NewTrainingModalComponent } from '../new-training-modal/new-training-modal.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProfileDetailsComponent } from '../profile-details/profile-details.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     TrainingList,
     TrainingCardModalComponent,
     NewTrainingModalComponent,
+    ProfileDetailsComponent,
   ],
 })
 export class TrainingListModule {}
