@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
   plugins: {
     SplashScreen: {
       launchShowDuration: 3000,
-      launchAutoHide: false,
+      launchAutoHide: true,
       launchFadeOutDuration: 3000,
       backgroundColor: '#a538ff',
       androidSplashResourceName: 'splash',
@@ -21,6 +21,9 @@ const config: CapacitorConfig = {
       layoutName: 'launch_screen',
       useDialog: true,
     },
+    StatusBar: {
+      overlaysWebView: false,
+    }
   },
 };
 

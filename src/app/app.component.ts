@@ -6,7 +6,6 @@ import { Platform } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
 
 import { App } from '@capacitor/app';
-import { SplashScreen } from '@capacitor/splash-screen';
 import { StatusBar, Style } from '@capacitor/status-bar';
 
 @Component({
@@ -27,9 +26,10 @@ export class AppComponent implements OnInit {
 
   private async initializeApp(): Promise<void> {
     try {
-      await this.platformService.ready();
-      await SplashScreen.hide();
-      await StatusBar.setStyle({ style: Style.Light });
+      const platform = await this.platformService.ready();
+      if (platform) {
+        await StatusBar.setStyle({ style: Style.Default });
+      }
     } catch (e) {
       localStorage.clear();
       const alert = await this.alertController.create({
