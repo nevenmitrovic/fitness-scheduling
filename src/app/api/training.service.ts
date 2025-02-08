@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
 
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +46,7 @@ export class TrainingService {
       const res = await this.supabase
         .from('training_event_exercisers')
         .select('user_id')
-        .eq('training_event_id', tID)
+        .eq('training_event_id', tID);
       if (res.error) throw res.error;
       return res;
     } catch (e) {
