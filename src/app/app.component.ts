@@ -21,25 +21,25 @@ export class AppComponent implements OnInit {
   private readonly alertController = inject(AlertController);
 
   async ngOnInit(): Promise<void> {
-    // this.initializeApp();
+    this.initializeApp();
     this.userService.onAuthStateChange();
   }
 
-  // private async initializeApp(): Promise<void> {
-  //   try {
-  //     await this.platformService.ready();
-  //     await SplashScreen.hide();
-  //     await StatusBar.setStyle({ style: Style.Light });
-  //   } catch (e) {
-  //     localStorage.clear();
-  //     const alert = await this.alertController.create({
-  //       header: 'Greska',
-  //       message: 'Greska prilikom pokretanja aplikacije, pokusajte ponovo.',
-  //       buttons: ['OK'],
-  //     });
-  //     await alert.present();
-  //     await this.userService.signOut();
-  //     await App.exitApp();
-  //   }
-  // }
+  private async initializeApp(): Promise<void> {
+    try {
+      await this.platformService.ready();
+      await SplashScreen.hide();
+      await StatusBar.setStyle({ style: Style.Light });
+    } catch (e) {
+      localStorage.clear();
+      const alert = await this.alertController.create({
+        header: 'Greska',
+        message: 'Greska prilikom pokretanja aplikacije, pokusajte ponovo.',
+        buttons: ['OK'],
+      });
+      await alert.present();
+      await this.userService.signOut();
+      await App.exitApp();
+    }
+  }
 }
